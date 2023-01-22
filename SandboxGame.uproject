@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{132FE167-450F-81A8-5F91-CCBF1B2BBF6C}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "SandboxGame",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}
