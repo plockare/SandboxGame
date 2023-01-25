@@ -39,6 +39,10 @@ class ASandboxGameCharacter : public ACharacter
 
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InfoAction;
+
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* ActionAction;
 
 protected:
@@ -58,6 +62,7 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	void SetLMBTriggered(const FInputActionValue& Value);
+	void SetRMBTriggered(const FInputActionValue& Value);
 			
 
 protected:

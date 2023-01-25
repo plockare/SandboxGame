@@ -1,6 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "SandboxGameCharacter.h"
+
+#include <string>
+
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -91,10 +94,15 @@ void ASandboxGameCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASandboxGameCharacter::Look);
 
+		EnhancedInputComponent->BindAction(InfoAction, ETriggerEvent::Started, this,
+		                                   &ASandboxGameCharacter::SetLMBTriggered);
+		EnhancedInputComponent->BindAction(InfoAction, ETriggerEvent::Completed, this,
+		                                   &ASandboxGameCharacter::SetLMBTriggered);
+
 		EnhancedInputComponent->BindAction(ActionAction, ETriggerEvent::Started, this,
-		                                   &ASandboxGameCharacter::SetLMBTriggered);
+		                                   &ASandboxGameCharacter::SetRMBTriggered);
 		EnhancedInputComponent->BindAction(ActionAction, ETriggerEvent::Completed, this,
-		                                   &ASandboxGameCharacter::SetLMBTriggered);
+		                                   &ASandboxGameCharacter::SetRMBTriggered);
 	}
 }
 
@@ -107,7 +115,10 @@ void ASandboxGameCharacter::Move(const FInputActionValue& Value)
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		
+		float yaw = this->LeftMousePressed ? GetCapsuleComponent()->GetComponentRotation().Yaw : Rotation.Yaw;
+
+		const FRotator YawRotation(0, yaw, 0);
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
@@ -128,11 +139,7 @@ void ASandboxGameCharacter::Look(const FInputActionValue& Value)
 
 	if (Controller != nullptr)
 	{
-		// add yaw and pitch input to controller
-		if (!this->LeftMousePressed)
-		{
-			AddControllerYawInput(LookAxisVector.X);
-		}
+		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
@@ -140,4 +147,9 @@ void ASandboxGameCharacter::Look(const FInputActionValue& Value)
 void ASandboxGameCharacter::SetLMBTriggered(const FInputActionValue& Value)
 {
 	this->LeftMousePressed = Value.ToString() == "true";
+}
+
+void ASandboxGameCharacter::SetRMBTriggered(const FInputActionValue& Value)
+{
+	this->RightMousePressed = Value.ToString() == "true";
 }
