@@ -115,7 +115,7 @@ void ASandboxGameCharacter::Move(const FInputActionValue& Value)
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
-		
+
 		float yaw = this->LeftMousePressed ? GetCapsuleComponent()->GetComponentRotation().Yaw : Rotation.Yaw;
 
 		const FRotator YawRotation(0, yaw, 0);
@@ -152,4 +152,5 @@ void ASandboxGameCharacter::SetLMBTriggered(const FInputActionValue& Value)
 void ASandboxGameCharacter::SetRMBTriggered(const FInputActionValue& Value)
 {
 	this->RightMousePressed = Value.ToString() == "true";
+	bUseControllerRotationYaw = this->RightMousePressed;
 }
