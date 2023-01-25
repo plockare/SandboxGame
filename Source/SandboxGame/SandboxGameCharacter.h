@@ -37,6 +37,14 @@ class ASandboxGameCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* ActionAction;
+
+protected:
+	bool LeftMousePressed;
+	bool RightMousePressed;
+
 public:
 	ASandboxGameCharacter();
 	
@@ -48,6 +56,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	void SetLMBTriggered(const FInputActionValue& Value);
 			
 
 protected:
