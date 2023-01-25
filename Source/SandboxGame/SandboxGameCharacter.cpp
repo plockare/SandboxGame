@@ -59,6 +59,11 @@ void ASandboxGameCharacter::BeginPlay()
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
+		PlayerController->bShowMouseCursor = true;
+		PlayerController->bEnableClickEvents = true;
+		PlayerController->bEnableMouseOverEvents = true;
+		PlayerController->SetInputMode(FInputModeGameAndUI());
+		
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
